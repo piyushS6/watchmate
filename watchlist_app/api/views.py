@@ -16,6 +16,7 @@ from watchlist_app.api.permissions import IsAdminOrReadOnly, IsReviewUserOrReadO
 from watchlist_app.models import Watchlist, StreamPlatform, Review
 from watchlist_app.api.serializers import WatchlistSerializer, StreamPlatformSerializer, ReviewSerializer
 from watchlist_app.api.throttling import ReviewCreateThrottle, ReviewListThrottle
+from watchlist_app.api.pagination import WatchListPagination, WatchListLOPagination, WatchListCPagination
 
 # Concrete view classes
 
@@ -113,12 +114,14 @@ class ReviewDetail(generics.RetrieveUpdateDestroyAPIView):
 class WatchListGV(generics.ListAPIView):
     queryset = Watchlist.objects.all()
     serializer_class = WatchlistSerializer
+    pagination_class = WatchListPagination
+    
     # filter_backends = [DjangoFilterBackend]
     # filterset_fields = ['title', 'platform__name']
     # filter_backends = [filters.SearchFilter]
     # search_fields = ['title', 'platform__name']
-    filter_backends = [filters.OrderingFilter]
-    ordering_fields = ['title', 'platform__name', 'avg_rating']
+    # filter_backends = [filters.OrderingFilter]
+    # ordering_fields = ['title', 'platform__name', 'avg_rating']
 
 
 # Class based views
